@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: azure-files-deployment
+  labels:
+    app: azure-files-app
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: azure-files-app
+  template:
+    metadata:
+      labels:
+        app: azure-files-app
+    spec:
+      containers:
+        - name: azure-files-app
+          image: ananthayyaswamy03/golang-backend-env:v6
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 3000
+          volumeMounts:
+            - name: my-azurefile-volume
+              mountPath: "/usr/share/app"
+      volumes: 
+        - name: my-azurefile-volume
+          persistentVolumeClaim:
+            claimName: my-azurefile-pvclaim
+
