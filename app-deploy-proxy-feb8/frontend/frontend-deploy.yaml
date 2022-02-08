@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-deploy1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend-deploy1
+  template:
+    metadata:
+      labels:
+        app: backend-deploy1
+    spec:
+      containers:
+      - name: backend-deploy1
+        image: ananthayyaswamy03/loginfunctionfrontend:v3
+        
+        imagePullPolicy: Always
+        # resources:
+        #   limits:
+        #     memory: "128Mi"
+        #     cpu: "500m"
+        ports:
+        - containerPort: 3000
+        env:
+           - name: DB_USERNAME
+             value: "dbadminuser@akswebappdb21" 
+           - name: DB_PASSWORD
+             value: "Maxmin@321"   

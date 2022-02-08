@@ -1,0 +1,12 @@
+version: "3.3"
+
+services:
+  mysql:
+    image: mysql
+    volumes:
+      - type: volume
+        source: my_volume
+        target: /data 
+
+volumes:
+  my_volume:

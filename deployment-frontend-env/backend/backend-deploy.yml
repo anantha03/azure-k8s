@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-deploy
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: backend-deploy
+  template:
+    metadata:
+      labels:
+        app: backend-deploy
+    spec:
+      containers:
+      - name: backend-deploy
+        image: ananthayyaswamy03/golang-backend-env:v6
+        imagePullPolicy: Always
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 3000
+        env:
+           - name: DB_USERNAME
+             value: "dbadminuser@akswebappdb21" 
+           - name: DB_PASSWORD
+             value: "Maxmin@321"   

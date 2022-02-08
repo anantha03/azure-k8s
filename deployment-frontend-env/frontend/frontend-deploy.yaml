@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend-deploy
+spec:
+  selector:
+    matchLabels:
+      app: frontend-deploy
+      tier: frontend
+      track: stable
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: frontend-deploy
+        tier: frontend
+        track: stable
+    spec:
+      containers:
+        - name: frontend-deploy
+          image: ananthayyaswamy03/angular-env-url:v3
+          ports:
+            - containerPort: 80
+          env:
+           - name: Backend_IP
+             value: "http://20.81.50.36:3000/api" 
+          lifecycle:
+            preStop:
+              exec:
+                command: ["/usr/sbin/nginx","-s","quit"]

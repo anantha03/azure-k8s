@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: azure-files-deployment
+  labels:
+    app: azure-files-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: azure-files-app
+  template:
+    metadata:
+      labels:
+        app: azure-files-app
+    spec:
+      containers:
+        - name: azure-files-app
+          image: ananthayyaswamy03/golang-backend-env:v7
+          imagePullPolicy: Always
+          env:
+            - name: DB_HOSTNAME
+              value: "mysql"
+            - name: DB_PORT
+              value: "3306"
+            - name: DB_NAME
+              value: "webappdb"
+            - name: DB_USERNAME
+              value: "dbadminuser@akswebappdb21"
+            - name: DB_PASSWORD
+              value: "Maxmin@321"
+            - name: ACCOUNT_NAME
+              value: "fc29f08dfb238435fbcf4ec"
+            - name: ACCOUNT_KEY
+              value: "RayUPDk/VRZ80/2OheDHJWZg76htfobGy5Me2PpsNOKh5m4+Glh0PNNem/YbZ0MRNtUMbxtG7VE6g/hByq9JdQ=="
+          ports:
+            - containerPort: 3000
+          volumeMounts:
+            - name: my-azurefile-volume
+              mountPath: "/usr/share/app"
+      volumes:
+        - name: my-azurefile-volume
+          persistentVolumeClaim:
+            claimName: my-azurefile-pvclaim
